@@ -37,7 +37,7 @@ tf-plan:
     - tf-init
   script:
     - ls -ltr ./tf
-    - cd ./tf && terraform plan -out "tf-plan"
+    - cd ./tf && terraform validate && terraform plan -out "tf-plan"
   artifacts:
     paths: 
       - ./tf/tf-plan
