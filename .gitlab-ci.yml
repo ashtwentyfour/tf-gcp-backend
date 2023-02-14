@@ -29,7 +29,7 @@ tf-init:
     paths:
       - ./tf/gcp/*
       - ./tf/.terraform/*
-      - ./tf/.terraform.lock.*
+      - ./tf/*.lock.*
 
 tf-plan:
   stage: tf-plan
@@ -41,6 +41,7 @@ tf-plan:
   artifacts:
     paths: 
       - ./tf/tf-plan
+      - ./tf/*.lock.*
 
 tf-apply:
   stage: tf-apply
