@@ -32,8 +32,10 @@ tf-init:
 
 tf-plan:
   stage: tf-plan
+  dependencies:
+    - tf-init
   script:
-    - ls -ltr ./tf
+    - ls -ltraR ./tf
     - cd ./tf && terraform validate
     - terraform plan -out "tf-plan"
   artifacts:
