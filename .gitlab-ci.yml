@@ -28,12 +28,11 @@ tf-init:
   artifacts:
     paths:
       - ./gcp/*
-      - ./tf/*.tfstate
-      - ./tf/*.tfstate.*
 
 tf-plan:
   stage: tf-plan
   script:
+    - ls -ltr ./tf
     - cd ./tf && terraform validate
     - terraform plan -out "tf-plan"
   artifacts:
