@@ -1,5 +1,6 @@
 provider "google" {
   region  = var.region
   project = var.project
-  credentials = "./gcp/key-file.json"
+  credentials = "${file(./gcp/key-file.json)}"
+  project = var.project
 }
