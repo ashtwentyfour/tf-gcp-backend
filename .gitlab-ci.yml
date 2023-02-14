@@ -23,7 +23,7 @@ gcp-auth:
   stage: auth
   script:
     - rm -rf .terraform
-    - mkdir -p .gcp
+    - mkdir -p ./gcp
     - echo $GOOGLE_CREDENTIALS_B64 | base64 -d > ./gcp/key-file.json
     - terraform init
   artifacts:
