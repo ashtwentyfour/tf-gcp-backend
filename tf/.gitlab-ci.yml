@@ -1,0 +1,32 @@
+image:
+   name: hashicorp/terraform:light
+   entrypoint:
+     - '/usr/bin/env'
+     - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: never
+    - if: $CI_PIPELINE_SOURCE == "push"
+      when: never
+    - when: always
+
+stages:
+  - auth
+  - tf-init
+  - tf-validate
+  - tf-plan
+  - tf-apply
+
+gcp-auth:
+  stage: auth
+  script:
+    - rm -rf .terraform
+    - mkdir -p .gcp
+    - echo $GOOGLE_CREDENTIALS_B64 | base64 -d > ./gcp/key-file.json
+    - terraform init
+  artifacts:
+    paths:
+      - ./gcp/*
+
