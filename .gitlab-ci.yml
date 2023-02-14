@@ -18,6 +18,15 @@ stages:
   - tf-plan
   - tf-apply
 
+cache: &global_cache
+  key: $CI_COMMIT_REF_SLUG
+  paths:
+    - ./tf/gcp
+    - ./tf/.terraform
+    - ./tf/.terraform.lock.hcl
+    - ./tf/tf-plan
+  policy: pull-push
+
 tf-init:
   stage: tf-init
   script:
@@ -25,11 +34,6 @@ tf-init:
     - mkdir -p ./tf/gcp
     - echo $GOOGLE_CREDENTIALS_B64 | base64 -d > ./tf/gcp/key-file.json
     - cd ./tf && terraform init
-  artifacts:
-    paths:
-      - ./tf/gcp/*
-      - ./tf/.terraform/*
-      - ./tf/*.lock.*
 
 tf-plan:
   stage: tf-plan
@@ -38,10 +42,6 @@ tf-plan:
   script:
     - ls -ltr ./tf
     - cd ./tf && terraform validate && terraform plan -out "tf-plan"
-  artifacts:
-    paths: 
-      - ./tf/tf-plan
-      - ./tf/*.lock.*
 
 tf-apply:
   stage: tf-apply
