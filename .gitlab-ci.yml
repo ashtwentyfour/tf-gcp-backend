@@ -41,3 +41,11 @@ tf-plan:
   artifacts:
     paths: 
       - ./tf/tf-plan
+
+tf-apply:
+  stage: tf-apply
+  dependencies:
+    - tf-plan
+  script:
+    - cd ./tf && terraform apply -input=false "tf-plan"
+  when: manual
