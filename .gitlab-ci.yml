@@ -37,6 +37,6 @@ tf-plan:
     - cd ./tf && terraform validate
     - terraform plan -out "tf-plan"
   artifacts:
-    path: 
+    paths: 
       - ./tf/tf-plan
 
