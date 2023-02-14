@@ -28,6 +28,7 @@ tf-init:
   artifacts:
     paths:
       - ./gcp/*
+      - ./tf/.terraform/*
 
 tf-plan:
   stage: tf-plan
