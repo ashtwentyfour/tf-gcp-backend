@@ -21,13 +21,13 @@ stages:
 tf-init:
   stage: tf-init
   script:
-    - rm -rf .terraform
-    - mkdir -p ./gcp
-    - echo $GOOGLE_CREDENTIALS_B64 | base64 -d > ./gcp/key-file.json
+    - rm -rf ./tf/.terraform
+    - mkdir -p ./tf/gcp
+    - echo $GOOGLE_CREDENTIALS_B64 | base64 -d > ./tf/gcp/key-file.json
     - cd ./tf && terraform init
   artifacts:
     paths:
-      - ./gcp/*
+      - ./tf/gcp/*
       - ./tf/.terraform/*
       - ./tf/.terraform.lock.*
 
@@ -41,4 +41,3 @@ tf-plan:
   artifacts:
     paths: 
       - ./tf/tf-plan
-
