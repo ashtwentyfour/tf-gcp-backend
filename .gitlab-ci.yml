@@ -13,20 +13,30 @@ workflow:
     - when: always
 
 stages:
-  - auth
   - tf-init
   - tf-validate
   - tf-plan
   - tf-apply
 
-gcp-auth:
-  stage: auth
+tf-init:
+  stage: tf-init
   script:
     - rm -rf .terraform
     - mkdir -p ./gcp
     - echo $GOOGLE_CREDENTIALS_B64 | base64 -d > ./gcp/key-file.json
-    - terraform init
+    - cd ./tf && terraform init
   artifacts:
     paths:
       - ./gcp/*
+      - ./tf/*.tfstate
+      - ./tf/*.tfstate.*
+
+tf-plan:
+  stage: tf-plan
+  script:
+    - cd ./tf && terraform validate
+    - terraform plan -out "tf-plan"
+  artifacts:
+    path: 
+      - ./tf/tf-plan
 
